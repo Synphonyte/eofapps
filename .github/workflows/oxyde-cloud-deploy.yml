@@ -1,0 +1,64 @@
+on:
+  push:
+    branches:
+      - main
+    # Pattern matched against refs/tags
+    tags:
+      - "*"         # Push events to every tag not containing /
+  workflow_dispatch:
+
+name: Cloud Deploy Workflow
+
+permissions: write-all
+
+env:
+  RUST_BACKTRACE: "full"
+  LEPTOS_BIN_TARGET_TRIPLE: "x86_64-unknown-linux-musl"
+  
+jobs:
+  deploy:
+    name: Deploy To Oxyde Cloud
+    runs-on: ubuntu-latest
+    container: ghcr.io/blackdex/rust-musl:x86_64-musl-stable
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          profile: minimal
+          override: true
+          components: rustfmt, clippy, rust-src
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          
+      - name: Install necessary libraries
+        run: |
+            apt-get update && apt-get install -y gh
+            npm install && npx browserslist@latest --update-db
+          
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+
+#       - name: Check formatting
+#         run: cargo fmt --check
+#       - name: Clippy
+#         run: cargo clippy --features docs,math --tests -- -D warnings
+#       - name: Run tests
+#         run: cargo test
+ 
+      - name: Custom run
+        run: |
+          echo "here you can run some code you need like"
+#          echo "${{ secrets.BUILD_ENV }}" > .env
+
+      - name: Deploy to Oxyde Cloud
+        uses: Synphonyte/oxyde-cloud-deploy-action@v1
+        with:
+          api-token: ${{ secrets.OXYDE_CLOUD_TOKEN }}
+          cloud-config-file: oxyde-cloud.toml
+
