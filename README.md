@@ -5,6 +5,11 @@
 
 ## Install
 
+Rustup
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+Cargo-Leptos
 ```bash
 cargo install cargo-leptos --locked
 ```
