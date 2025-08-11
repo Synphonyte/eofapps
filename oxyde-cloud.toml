@@ -1,5 +1,5 @@
 [app]
-slug = "oefapps"
+slug = "eofapp"
 
 [env]
 # Add environment variables here that are needed while running the app in the cloud
