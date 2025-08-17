@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+echo "Testcontent" >testfile
+echo "Test log output from yo mama"
