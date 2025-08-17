@@ -1,0 +1,2 @@
+OCI_IMAGE="ghcr.io/blackdex/rust-musl:x86_64-musl-stable"
+ENV_VARIABLES="CARGO_BUILD_TARGET=x86_64-unknown-linux-musl"
