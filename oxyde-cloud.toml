@@ -1,9 +1,4 @@
-[app]
-slug = "eofapps"
-
-[env]
-# Add environment variables here that are needed while running the app in the cloud
-
-# For example for sqlx you probably need sth like the following. Please note that you can access the
-# Oxyde Cloud Secret Store with the syntax `${{ secrets.SECRET_NAME }}`.
-# DATABASE_URL = "postgresql://${{ secrets.DATABASE_CREDENTIALS }}@<host>:<port>/<database>"
+[hooks]
+pre_build = "sqlx migrate run"
+post_build = ""
+pre_startup = ""
