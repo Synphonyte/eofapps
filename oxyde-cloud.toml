@@ -1,4 +1,4 @@
 [hooks]
-pre_build = "cargo install sqlx-cli && sqlx migrate run"
-post_build = "echo post-build"
+pre_build = ""
+post_build = ""
 pre_startup = ""
